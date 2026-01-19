@@ -3,68 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Produk Digital</title>
+    <title>EA Midas Official Store</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f9; text-align: center; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .product-img { width: 100%; border-radius: 10px; margin-bottom: 20px; }
-        .price { font-size: 24px; color: #27ae60; font-weight: bold; margin: 10px 0; }
-        .btn-beli { background-color: #25D366; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; }
-        .btn-beli:hover { background-color: #1ebe57; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f9; text-align: center; margin: 0; padding: 20px; }
+        header { margin-bottom: 40px; }
+        h1 { color: #333; margin-bottom: 10px; }
         
-        /* Pop-up QRIS */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 90%; text-align: center; }
-        .qris-img { max-width: 250px; margin: 15px 0; border: 1px solid #ddd; }
-        .btn-confirm { background-color: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: block; margin-top: 10px; }
+        /* Tampilan Grid 10 Produk */
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .product-img { width: 100%; border-radius: 10px; height: 180px; object-fit: cover; background: #eee; margin-bottom: 15px; }
+        .product-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .product-desc { font-size: 14px; color: #666; margin-bottom: 15px; }
+        .price { font-size: 20px; color: #27ae60; font-weight: bold; margin-bottom: 15px; }
+        
+        .btn-beli { 
+            background-color: #25D366; color: white; border: none; padding: 10px 0; width: 100%; 
+            font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+        .btn-beli:hover { background-color: #1ebe57; }
+
+        /* Modal QRIS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; max-width: 350px; width: 90%; text-align: center; position: relative; }
+        .qris-img { max-width: 100%; margin: 15px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-confirm { background-color: #3498db; color: white; padding: 12px; border-radius: 8px; text-decoration: none; display: block; margin-top: 10px; font-weight: bold; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #999; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://via.placeholder.com/600x400?text=Foto+Produk+Kamu" alt="Produk" class="product-img">
-        
-        <h1>Nama Produk Keren</h1>
-        <p>Deskripsi singkat produk kamu. Jelaskan kelebihan produk di sini agar customer tertarik membeli.</p>
-        <div class="price">Rp 100.000</div>
+    <header>
+        <h1>EA Midas Official Store</h1>
+        <p>Pusat Robot Trading Terbaik & Terpercaya</p>
+    </header>
 
-        <button class="btn-beli" onclick="showPayment()">Beli Sekarang</button>
+    <div class="product-container">
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=EA+Midas+Basic" class="product-img">
+            <div class="product-name">EA Midas Basic</div>
+            <div class="product-desc">Cocok untuk pemula, modal kecil.</div>
+            <div class="price">Rp 150.000</div>
+            <button class="btn-beli" onclick="openPayment('EA Midas Basic', 'Rp 150.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=EA+Midas+Pro" class="product-img">
+            <div class="product-name">EA Midas Pro</div>
+            <div class="product-desc">Fitur lengkap dengan risk management.</div>
+            <div class="price">Rp 300.000</div>
+            <button class="btn-beli" onclick="openPayment('EA Midas Pro', 'Rp 300.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=EA+Midas+Gold" class="product-img">
+            <div class="product-name">EA Midas Gold</div>
+            <div class="product-desc">Strategi khusus pair XAUUSD.</div>
+            <div class="price">Rp 500.000</div>
+            <button class="btn-beli" onclick="openPayment('EA Midas Gold', 'Rp 500.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=Script+Anti+MC" class="product-img">
+            <div class="product-name">Script Anti MC</div>
+            <div class="product-desc">Pengaman akun saat floating besar.</div>
+            <div class="price">Rp 100.000</div>
+            <button class="btn-beli" onclick="openPayment('Script Anti MC', 'Rp 100.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=Indikator+Premium" class="product-img">
+            <div class="product-name">Indikator Signal Premium</div>
+            <div class="product-desc">Akurasi sinyal masuk 80%.</div>
+            <div class="price">Rp 200.000</div>
+            <button class="btn-beli" onclick="openPayment('Indikator Signal', 'Rp 200.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=E-Book+Trading" class="product-img">
+            <div class="product-name">E-Book Master Trading</div>
+            <div class="product-desc">Panduan lengkap dari nol sampai profit.</div>
+            <div class="price">Rp 50.000</div>
+            <button class="btn-beli" onclick="openPayment('E-Book Master', 'Rp 50.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=Paket+Bundling" class="product-img">
+            <div class="product-name">Paket Bundling Lengkap</div>
+            <div class="product-desc">Dapat EA + Indikator + Ebook.</div>
+            <div class="price">Rp 750.000</div>
+            <button class="btn-beli" onclick="openPayment('Paket Bundling', 'Rp 750.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=VPS+Setup" class="product-img">
+            <div class="product-name">Jasa Setup VPS</div>
+            <div class="product-desc">Bantuan setting VPS agar EA jalan 24 jam.</div>
+            <div class="price">Rp 50.000</div>
+            <button class="btn-beli" onclick="openPayment('Jasa Setup VPS', 'Rp 50.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=Mentoring+Private" class="product-img">
+            <div class="product-name">Mentoring Private</div>
+            <div class="product-desc">Belajar 1 on 1 via Zoom (1 Jam).</div>
+            <div class="price">Rp 150.000</div>
+            <button class="btn-beli" onclick="openPayment('Mentoring Private', 'Rp 150.000')">Beli Sekarang</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/300?text=EA+Custom" class="product-img">
+            <div class="product-name">Request EA Custom</div>
+            <div class="product-desc">Buat EA sesuai strategi kamu sendiri.</div>
+            <div class="price">Rp 1.000.000</div>
+            <button class="btn-beli" onclick="openPayment('EA Custom', 'Rp 1.000.000')">Beli Sekarang</button>
+        </div>
     </div>
 
     <div id="paymentModal" class="modal">
         <div class="modal-content">
-            <h3>Scan QRIS di bawah</h3>
-            <p>Silakan transfer sebesar <b>Rp 100.000</b></p>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3>Pembayaran QRIS</h3>
+            <p>Produk: <b id="modalNamaProduk">-</b></p>
+            <p>Total: <b id="modalHarga" style="color:#27ae60;">-</b></p>
             
-            <img src="https://via.placeholder.com/250?text=QRIS+CODE+KAMU" class="qris-img" alt="QRIS">
+            <img src="https://via.placeholder.com/250?text=QRIS+KAMU+DISINI" class="qris-img">
             
-            <p><small>Setelah bayar, wajib konfirmasi!</small></p>
-            
-            <a href="#" id="waLink" class="btn-confirm" target="_blank">✅ Saya Sudah Bayar (Konfirmasi WA)</a>
-            <br>
-            <button onclick="closeModal()" style="background:none; border:none; color: #999; cursor:pointer;">Batal</button>
+            <p><small>Scan QRIS di atas, lalu konfirmasi ke WA.</small></p>
+            <a href="#" id="btnWA" class="btn-confirm" target="_blank">✅ Konfirmasi via WhatsApp</a>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURASI KAMU DI SINI ---
-        const nomorWA = "628123456789"; // Ganti dengan nomor WA kamu (pakai 62)
-        const namaProduk = "Nama Produk Keren";
-        const harga = "Rp 100.000";
+        // --- GANTI NOMOR WA DI SINI (Pakai 62) ---
+        const nomorWA = "6287887361929"; 
 
-        function showPayment() {
+        function openPayment(nama, harga) {
+            // Update Teks di Modal
+            document.getElementById('modalNamaProduk').innerText = nama;
+            document.getElementById('modalHarga').innerText = harga;
+            
+            // Update Link WA Otomatis
+            const pesan = `Halo Admin EA Midas, saya sudah transfer via QRIS.\n\n📦 Order: ${nama}\n💰 Nominal: ${harga}\n\nMohon segera diproses. Terima kasih!`;
+            const link = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+            
+            document.getElementById('btnWA').href = link;
+
+            // Tampilkan Modal
             document.getElementById('paymentModal').style.display = 'flex';
-            
-            // Buat Link WA Otomatis
-            const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS untuk pembelian: \n\n📦 Produk: ${namaProduk}\n💰 Harga: ${harga}\n\nMohon dicek dan diproses. Terima kasih!`;
-            const linkWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
-            
-            document.getElementById('waLink').href = linkWA;
         }
 
         function closeModal() {
             document.getElementById('paymentModal').style.display = 'none';
+        }
+        
+        // Tutup modal kalau klik di luar kotak
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('paymentModal')) {
+                closeModal();
+            }
         }
     </script>
 
