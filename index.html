@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Produk Digital</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f9; text-align: center; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .product-img { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+        .price { font-size: 24px; color: #27ae60; font-weight: bold; margin: 10px 0; }
+        .btn-beli { background-color: #25D366; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn-beli:hover { background-color: #1ebe57; }
+        
+        /* Pop-up QRIS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 90%; text-align: center; }
+        .qris-img { max-width: 250px; margin: 15px 0; border: 1px solid #ddd; }
+        .btn-confirm { background-color: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://via.placeholder.com/600x400?text=Foto+Produk+Kamu" alt="Produk" class="product-img">
+        
+        <h1>Nama Produk Keren</h1>
+        <p>Deskripsi singkat produk kamu. Jelaskan kelebihan produk di sini agar customer tertarik membeli.</p>
+        <div class="price">Rp 100.000</div>
+
+        <button class="btn-beli" onclick="showPayment()">Beli Sekarang</button>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>Scan QRIS di bawah</h3>
+            <p>Silakan transfer sebesar <b>Rp 100.000</b></p>
+            
+            <img src="https://via.placeholder.com/250?text=QRIS+CODE+KAMU" class="qris-img" alt="QRIS">
+            
+            <p><small>Setelah bayar, wajib konfirmasi!</small></p>
+            
+            <a href="#" id="waLink" class="btn-confirm" target="_blank">✅ Saya Sudah Bayar (Konfirmasi WA)</a>
+            <br>
+            <button onclick="closeModal()" style="background:none; border:none; color: #999; cursor:pointer;">Batal</button>
+        </div>
+    </div>
+
+    <script>
+        // --- KONFIGURASI KAMU DI SINI ---
+        const nomorWA = "628123456789"; // Ganti dengan nomor WA kamu (pakai 62)
+        const namaProduk = "Nama Produk Keren";
+        const harga = "Rp 100.000";
+
+        function showPayment() {
+            document.getElementById('paymentModal').style.display = 'flex';
+            
+            // Buat Link WA Otomatis
+            const pesan = `Halo Admin, saya sudah melakukan pembayaran via QRIS untuk pembelian: \n\n📦 Produk: ${namaProduk}\n💰 Harga: ${harga}\n\nMohon dicek dan diproses. Terima kasih!`;
+            const linkWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+            
+            document.getElementById('waLink').href = linkWA;
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
